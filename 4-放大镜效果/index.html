@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>放大镜</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#div1 {
+				width: 100px;
+				height: 100px;
+				background-color: pink;
+				position: absolute;
+				cursor: move;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		
+	</body>
+	<script type="text/javascript">
+		var oDiv = document.getElementById("div1");
+		oDiv.onmousemove = function(e) {
+			var ev = e || window.event;
+			var cw = document.documentElement.clientWidth; // 浏览器可视区宽
+			var ch = document.documentElement.clientHeight; // 浏览器可视区高
+			var offW = oDiv.offsetWidth;
+			var offH = oDiv.offsetHeight;
+			// clientX 鼠标距离左侧的位置，clientY 鼠标距离顶部的距离
+			var clientx = ev.clientX;
+			var clienty = ev.clientY;
+			// 限制上下左右都出不去
+			// 左侧
+			if (clientx - offW/2 < 0) clientx = offW/2;
+			// 上侧
+			if (clienty - offH/2 < 0) clienty = offH/2;	
+			// 右侧
+			if (clientx - offW/2 > cw - offW) clientx = cw - offW/2;
+			// 下
+			if (clienty - offH/2 > ch - offH) clienty = ch - offH/2;
+			
+//			oDiv.style.left = (clientx + oDiv.offsetWidth / 2) + 'px';
+//			oDiv.style.top = (clienty + oDiv.offsetHeight / 2) + 'px';
+			oDiv.style.left = (clientx - offW/2) + 'px';
+			oDiv.style.top = (clienty - offH/2) + 'px';
+		}
+	</script>
+</html>

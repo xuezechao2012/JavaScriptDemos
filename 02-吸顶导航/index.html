@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>吸顶导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        p {
+            padding: 20px 0;
+        }
+        
+        .box1 {
+            background-color: red;
+            height: 40px;
+            line-height: 40px;
+        }
+        
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .box2 {
+            height: 40px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+    <p>11</p>
+    <p>12</p>
+    <p>13</p>
+    <p>14</p>
+    <p>15</p>
+    <div class="box1" id="box1">吸顶导航</div>
+    <div class="box2" id="box2"></div>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+    <p>11</p>
+    <p>12</p>
+    <p>13</p>
+    <p>14</p>
+    <p>15</p>
+</body>
+<script>
+    var oBox1 = document.getElementById("box1");
+    var oBox2 = document.getElementById("box2");
+    var box1Top = oBox1.offsetTop; // 保存box1的top值，防止改变box1的position值后，top值会改变
+    window.onscroll = function() {
+        var st = document.documentElement.scrollTop || document.body.scrollTop;
+        if (box1Top <= st) {
+            oBox1.classList.add('fixed');
+            oBox2.style.display = 'block'; // oBox2是替代obox1的位置，防止下面的内容直接顶上来，体验不好
+        } else {
+            oBox1.classList.remove('fixed');
+            oBox2.style.display = 'none';
+        }
+    }
+</script>
+
+</html>

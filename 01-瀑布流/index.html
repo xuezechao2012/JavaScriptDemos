@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瀑布流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .clearfix::after {
+            content: ' ';
+            display: block;
+            clear: both;
+        }
+        
+        .clearfix {
+            zoom: 1;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .list {
+            width: 1000px;
+            margin: 30px auto;
+        }
+        
+        .list ul {
+            float: left;
+            width: 320px;
+        }
+        
+        .list .c {
+            margin: 0 20px;
+        }
+        
+        .list li {
+            margin-bottom: 10px;
+            overflow: hidden;
+            border: 3px dashed orange;
+            border-radius: 15px;
+        }
+        
+        .list li h3 {
+            color: #fff;
+            background: darkturquoise;
+            text-align: center;
+            font-style: italic;
+            line-height: 35px;
+        }
+        
+        .list li img {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="list" class="clearfix" id="list">
+        <ul>
+
+        </ul>
+        <ul class="c">
+
+        </ul>
+        <ul>
+
+        </ul>
+    </div>
+</body>
+<script>
+    var imgArray = ['http://olaxx04q4.bkt.clouddn.com/LM24.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM20.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM14.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM18.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM20.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM13.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM12.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM06.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/LM05.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM09.jpg',
+        'http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM05.jpg',
+    ];
+    var oList = document.getElementById("list");
+    var aUL = document.getElementsByTagName("ul");
+    var num = 1;
+
+    function createLi() {
+        // 随机哪张图片
+        var inx = parseInt(Math.random() * 11);
+
+        var oLi = document.createElement("li");
+        var oH3 = document.createElement("h3");
+        var img = document.createElement("img");
+        img.src = imgArray[inx];
+        oH3.innerHTML = num;
+        num++;
+        oLi.appendChild(oH3);
+        oLi.appendChild(img);
+        var eleArr = Array.from(aUL);
+        eleArr.sort(function(a, b) { // 进行排序，高度最小的那个ul永远排在最前面
+            return a.offsetHeight - b.offsetHeight;
+        });
+        eleArr[0].appendChild(oLi); // 每一次插入图片的时候，查到高度最小的那一列，也就是第一列
+    }
+    // 创建li
+    for (var i = 0; i < 10; i++) {
+        createLi();
+    }
+
+    window.onload = window.onscroll = function() { // 页面加载完成或者每次滚动检查有没有加载到底
+        var scrTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var ch = document.documentElement.clientHeight;
+        if (aUL[0].offsetHeight < scrTop + ch) { // 每当元素的高度 < 页面滚动的高度 + 可视区域的高度
+            for (var i = 0; i < 10; i++) {
+                createLi(); // 重新加载数据
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>加载进度条</title>
+    <style>
+        .jd {
+            height: 30px;
+            background-color: #ccc;
+        }
+        
+        .jd_bar {
+            height: 30px;
+            background-color: yellowgreen;
+            width: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jd">
+        <div class="jd_bar" id="bar"></div>
+    </div>
+</body>
+<script>
+    // img 对象有三个事件：
+    // onabort 当用户放弃图像的装载时调用的事件句柄。
+    // onerror 在装载图像的过程中发生错误时调用的事件句柄。
+    // onload 	当图像装载完毕时调用的事件句柄。
+    var arr = ["http://d05.res.meilishuo.net/pic/_o/08/67/a22d07508aa5a12cfe6d0704d55e_800_1067.c6.jpg_5e611bd6_s1_q0_150_5_0_226_800.jpg", "http://d06.res.meilishuo.net/pic/_o/fb/b5/ddddc84e0e6fe2cb5de8a5372b6c_650_985.c6.jpg_77300c25_s1_q0_150_5_0_226_800.jpg", "http://d03.res.meilishuo.net/pic/_o/b4/52/db1c3239bb27f5e55b6ea920b393_468_561.c6.jpeg_a8ca03f5_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/c0/f4/6f7b77a87c5b4779d478f278f1b5_468_702.c6.jpeg_10747067_s1_q0_150_5_0_226_800.jpg", "http://d06.res.meilishuo.net/pic/_o/c0/04/6d5e2a206659121c8b3be83d0e37_533_800.c6.jpg_0cfb123c_s1_q0_150_5_0_226_800.jpg", "http://d06.res.meilishuo.net/pic/_o/ac/5e/921939c9b1006054b360ac67d127_440_440.c6.jpg_578c4152_s1_q0_150_5_0_226_800.jpg", "http://d03.res.meilishuo.net/pic/_o/07/ea/0952d59e08aae69653efea4dd441_533_800.c6.jpg_7d47db5f_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/0c/92/4bd66ffaf08cc36d0ad137a04ff5_600_900.c6.jpg_740e4c19_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/e1/1d/e0702d7dcf3213c0fb4b951ce34f_600_900.c6.jpg_a36fc30a_s1_q0_150_5_0_226_800.jpg", "http://d06.res.meilishuo.net/pic/_o/47/e0/275ab7eac6d8138f47ff510f0ea2_479_723.c6.jpg_4887d7b2_s1_q0_150_5_0_226_800.jpg", "http://d02.res.meilishuo.net/pic/_o/f5/c7/60dc33b528f7bbb1541cf5ba9c39_650_977.c6.jpg_fb399ccc_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/0c/bd/fe05a088868de9b7cebb9d82339b_534_800.c6.jpg_2eb0fcb8_s1_q0_150_5_0_226_800.jpg", "http://d03.res.meilishuo.net/pic/_o/91/9b/8177dfeb18a3df1e42b647a0a13e_650_1071.c6.jpg_474da9a0_s1_q0_150_5_0_226_800.jpg", "http://d03.res.meilishuo.net/pic/_o/b3/6d/4b759ec426fb1690386b3500ce93_780_1126.c6.jpg_fd1aca5d_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/91/e6/a06c2aecf8cb0ef152863b020b1d_525_800.c6.jpg_1805f2d7_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/f6/dc/215bfdb0902924d0ba69273cfa0d_800_1244.c6.jpg_75ed054e_s1_q0_150_5_0_226_800.jpg", "http://d05.res.meilishuo.net/pic/_o/dc/88/5c188d0477b4ebe3ed7999480c09_500_750.c6.jpg_8d741e26_s1_q0_150_5_0_226_800.jpg", "http://d04.res.meilishuo.net/pic/_o/86/e1/68902832cdd0b1451df90d67d875_468_764.c6.jpeg_bf397acf_s1_q0_150_5_0_226_800.jpg", "http://d04.res.meilishuo.net/pic/_o/f2/1f/bf209b2625e3bb74391bf6766fe7_640_964.c6.jpg_216e6873_s1_q0_150_5_0_226_800.jpg", "http://s2.mogucdn.com/p1/160714/152580223_ie4dkmzyhfstsztchezdambqgiyde_640x960.jpg_220x330.jpg", "http://s2.mogucdn.com/p1/160619/102039614_ifrdqojuga4tazrthezdambqmeyde_640x960.jpg_220x330.jpg", "http://s2.mogucdn.com/p1/160508/93323498_ie4wimzqhbtgemzwhazdambqgqyde_640x960.jpg_220x330.jpg", "http://s2.mogucdn.com/p1/160711/109744203_ie4ginbuhfrgkzlbhezdambqgiyde_640x960.jpg_220x330.jpg", "http://s2.mogucdn.com/p1/160707/154917784_ifrgknjrmrsdmyrzhezdambqmeyde_640x960.png_220x330.jpg", "https://gw.alicdn.com/tps/TB1uObrMXXXXXbrXXXXXXXXXXXX-280-200.jpg", "https://img.alicdn.com/tps/TB16ArBLVXXXXc4aXXXXXXXXXXX-280-200.jpg", "https://gw.alicdn.com/tps/TB12UI_KFXXXXaTXpXXXXXXXXXX-237-310.jpg", "https://gw.alicdn.com/tps/TB12DRfKVXXXXaaXXXXXXXXXXXX-237-400.jpg", "https://gw.alicdn.com/tps/TB11hg0KFXXXXXJXVXXXXXXXXXX-237-360.jpg", "https://img.alicdn.com/tps/i4/TB1b2kMJFXXXXcKXFXXjKK5_VXX-237-340.jpg", "https://img.alicdn.com/tps/i4/TB1GI7VJFXXXXb6XpXX3AS__VXX-237-400.jpg", "https://gw.alicdn.com/bao/uploaded/i1/2736605122/TB2us_HppXXXXcMXXXXXXXXXXXX_!!2736605122.jpg_280x380xz.jpg", "https://gw.alicdn.com/bao/uploaded/i4/587774466/TB2UfhBcXXXXXcIXXXXXXXXXXXX_!!587774466.jpg_280x380xz.jpg", "https://gw.alicdn.com/bao/uploaded/i4/TB1hYHZLVXXXXcpXVXXXXXXXXXX_!!0-item_pic.jpg_280x380xz.jpg", "http://s.handu.com/images/201501/thumb_img/1021928_thumb_G_1421393277211.jpg", "http://s.handu.com/images/201603/thumb_img/1459279889535710143.jpg", "http://s.handu.com/images/201607/thumb_img/1467408016201645321.jpg", "http://i3.quwan.com/images/201607/1467676339229755953-478.jpg", "http://i4.quwan.com/images/201411/1415671662099863312-478.jpg", "http://d05.res.meilishuo.net/pic/_o/92/99/b20f3b19eadb979366fbc5c3638c_1000_1320.c6.jpg_aef30daf_s1_q0_150_5_0_226_800.jpg", "http://d02.res.meilishuo.net/pic/_o/7c/ef/1b39f87cb3cde7e5f460b11ae8fc_640_832.cj.jpg_1fe51db9_s3_224_285.jpg", "http://d03.res.meilishuo.net/pic/_o/80/51/8989a7cca258f6681e98a704e5ac_640_832.c1.jpg_bbc00c39_s3_224_285.jpg", "http://d06.res.meilishuo.net/pic/_o/f6/b7/31ad667e44c2dcc60a2df5f9be95_640_832.cj.jpg_2d524457_s3_224_285.jpg"];
+    var n = 0;
+    var obar = document.getElementById('bar');
+    for (var i = 0; i < arr.length; i++) {
+        var oImg = new Image;
+        oImg.src = arr[i];
+        oImg.onload = function() {
+            obar.style.width = n / (arr.length - 1) * 100 + '%';
+            n++;
+        }
+    }
+</script>
+
+</html>

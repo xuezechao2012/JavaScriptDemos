@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .login {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 300px;
+        }
+        
+        .login h5 {
+            text-align: center;
+            cursor: move;
+            background-color: #999;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+            user-select: none;
+        }
+        
+        .content {
+            width: 100%;
+            height: 200px;
+            background-color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <h5 id="dragItem">登录</h5>
+        <div class="content">
+
+        </div>
+    </div>
+</body>
+<script>
+    var loginBox = document.getElementsByClassName('login')[0];
+    var dragItem = document.getElementById('dragItem');
+    dragObject(dragItem, loginBox);
+
+    function dragObject(obj, fatherObj) {
+        obj.onmousedown = function(e) {
+            var e = e || window.event;
+            // 计算鼠标在要拖动元素中的位置
+            var x = e.clientX - obj.getBoundingClientRect().left;
+            var y = e.clientY - obj.getBoundingClientRect().top;
+            document.onmousemove = function(e) {
+                var e = e || window.event;
+                var xMove = e.clientX - x;
+                var yMove = e.clientY - y;
+                // 限制范围,不能超出浏览器的范围
+                // 简单吸附功能，当贴近边上的时候，直接吸过去
+                if (xMove <= 10) xMove = 0;
+                if (yMove <= 10) yMove = 0;
+                if (xMove >= document.documentElement.clientWidth - fatherObj.offsetWidth) xMove = document.documentElement.clientWidth - fatherObj.offsetWidth;
+                if (yMove >= document.documentElement.clientHeight - fatherObj.offsetHeight) yMove = document.documentElement.clientHeight - fatherObj.offsetHeight;
+                // 移动
+                fatherObj.style.left = xMove + 'px';
+                fatherObj.style.top = yMove + 'px';
+            }
+            document.onmouseup = function() {
+                if (fatherObj.releaseCapture) fatherObj.releaseCapture();
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+            if (fatherObj.setCapture) {
+                fatherObj.setCapture;
+            }
+        }
+    }
+</script>
+
+</html>

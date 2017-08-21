@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>碰撞检测</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+        }
+        
+        #l {
+            background-color: hotpink;
+            left: 100px;
+            top: 100px;
+            z-index: 2;
+        }
+        
+        #r {
+            background-color: yellowgreen;
+            left: 300px;
+            top: 160px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="l"></div>
+    <div id="r"></div>
+</body>
+<script>
+    var leftDiv = document.getElementById("l");
+    var rightDiv = document.getElementById("r");
+    leftDiv.onmousedown = function(e) {
+        var e = e || window.event;
+        var x = e.clientX - leftDiv.offsetLeft,
+            y = e.clientY - leftDiv.offsetTop;
+        document.onmousemove = function(e) {
+            var e = e || window.event;
+            var l = e.clientX - x;
+            var t = e.clientY - y;
+
+            // 碰撞检测的基础
+            // 获取两个盒子4个边的位置
+            var lLeft = leftDiv.offsetLeft,
+                lTop = leftDiv.offsetTop,
+                lRight = leftDiv.offsetLeft + leftDiv.offsetWidth,
+                lBottom = leftDiv.offsetTop + leftDiv.offsetHeight;
+            var rLeft = rightDiv.offsetLeft,
+                rTop = rightDiv.offsetTop,
+                rRight = rightDiv.offsetLeft + rightDiv.offsetWidth,
+                rBottom = rightDiv.offsetTop + rightDiv.offsetHeight;
+
+            // 当坐标盒子处于右边盒子的内部，判断为碰撞
+            // 需要同时满足 
+            if (lLeft < rRight && lRight > rLeft && lTop < rBottom && lBottom > rTop) {
+                rightDiv.style.backgroundColor = 'orange';
+            } else {
+                rightDiv.style.backgroundColor = 'yellowgreen';
+            }
+
+            leftDiv.style.left = l + 'px';
+            leftDiv.style.top = t + 'px';
+        }
+        document.onmouseup = function() {
+
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+        return false;
+    }
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>保存拖拽路径</title>
+    <style>
+        #box {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: pink;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+</body>
+<script>
+    var oDiv = document.getElementById("box");
+    // 定义坐标值数组，保存坐标位置
+    var posx = [],
+        posy = [],
+        timer = null;
+    oDiv.onmousedown = function(e) {
+        var e = e || window.event;
+        var _this = this;
+        var x = e.clientX - _this.getBoundingClientRect().left;
+        var y = e.clientY - _this.getBoundingClientRect().top;
+        // 记录元素的初始位置
+        posx.push(_this.getBoundingClientRect().left);
+        posy.push(_this.getBoundingClientRect().top);
+        document.onmousemove = function(e) {
+            var e = e || window.event;
+            var l = e.clientX - x,
+                t = e.clientY - y;
+            if (l <= 0) l = 0;
+            if (t <= 0) t = 0;
+            if (l >= document.documentElement.clientWidth - oDiv.offsetWidth) l = document.documentElement.clientWidth - oDiv.offsetWidth;
+            if (t >= document.documentElement.clientHeight - oDiv.offsetHeight) t = document.documentElement.clientHeight - oDiv.offsetHeight;
+            posx.push(l);
+            posy.push(t);
+            _this.style.left = l + 'px';
+            _this.style.top = t + 'px';
+        }
+        document.onmouseup = function() {
+            if (oDiv.releaseCapture) oDiv.releaseCapture();
+            clearInterval(timer);
+            timer = setInterval(function() {
+                _this.style.left = posx.pop() + 'px';
+                _this.style.top = posy.pop() + 'px';
+                // 返回原位置之后，清除定时器
+                if (posx.length === 0 && posy.length === 0) {
+                    clearInterval(timer);
+                }
+            }, 30);
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+        if (oDiv.setCapture) oDiv.setCapture;
+        return false;
+
+    }
+</script>
+
+</html>

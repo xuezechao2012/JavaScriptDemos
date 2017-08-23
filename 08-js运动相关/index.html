@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js运动</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .moveBox {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            top: 0;
+            left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="moveBox"></div>
+</body>
+<script>
+    var moveObj = document.getElementsByClassName('moveBox')[0];
+    moveFn(moveObj, {
+        width: 300,
+        height: 300
+    });
+
+    // 封装运动函数
+    function moveFn(obj, json) {
+        clearInterval(obj.timer);
+
+        var start = {};
+        var step = 40; // 总完成步数
+        var n = 0; // 当前步数
+        var c = {}; // 可移动范围
+
+        for (var attr in json) {
+            start[attr] = parseInt(getStyle(obj, attr));
+            // 目标点
+            c[attr] = json[attr] - start[attr];
+        }
+
+        obj.timer = setInterval(function() {
+            n++;
+            for (var attr in json) {
+                if (attr == 'opacity') {
+                    obj.style.opacity = start[attr] + c[attr] / step * n;
+                    obj.style.filter = 'alpha(opacity=' + (start[attr] + c[attr] / step * n) * 100 + ')';
+                } else {
+                    obj.style[attr] = start[attr] + c[attr] / step * n + 'px';
+                }
+            }
+            if (n == step) {
+                clearInterval(obj.timer);
+            }
+        }, 30);
+    }
+
+    // 获取元素的样式
+    function getStyle(obj, attr) {
+        return (obj.currentStyle || getComputedStyle(obj, false))[attr];
+    }
+</script>
+
+</html>

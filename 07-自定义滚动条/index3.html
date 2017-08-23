@@ -126,15 +126,9 @@
                 var scale = 0;
                 if (vScrolling) {
                     t = e.clientY - obj.y;
-                    // obj.style.top = t + 'px';
-                    // scale = t / (barEffectiveRangeH);
-                    // moveObj.style.left = -scale * contEffectiveRangeH + 'px';
                     moveTopFn(t, obj, moveObj);
                 } else {
                     l = e.clientX - obj.x;
-                    // obj.style.left = l + 'px';
-                    // scale = l / (barEffectiveRangeW);
-                    // moveObj.style.left = -scale * contEffectiveRangeW + 'px';
                     moveLeftFn(l, obj, moveObj);
                 }
             }

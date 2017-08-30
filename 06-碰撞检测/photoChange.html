@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>photoDemo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .wrap {
+            width: 1000px;
+            height: 650px;
+            margin: 100px auto;
+            position: relative;
+            border: 1px solid;
+        }
+        
+        .wrap div {
+            box-sizing: border-box;
+            width: 300px;
+            height: 170px;
+            padding: 10px 20px;
+            position: absolute;
+        }
+        
+        .wrap div:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/00.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(2) {
+            top: 20px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/05.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(3) {
+            top: 20px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/08.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(4) {
+            top: 210px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/13.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(5) {
+            top: 210px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/17.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(6) {
+            top: 210px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/22.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(7) {
+            top: 400px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/29.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(8) {
+            top: 400px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM01.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(9) {
+            top: 400px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM03.jpg) no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+<script>
+    var fBox = document.getElementsByClassName('wrap')[0];
+    var moveObjs = fBox.getElementsByTagName('div');
+    var oldLeft = fBox.offsetLeft;
+    var oldTop = fBox.offsetTop;
+
+    for (var index = 0; index < moveObjs.length; index++) {
+        var element = moveObjs[index];
+        dragObject(element, fBox);
+    }
+
+    function dragObject(obj, fbox) {
+        obj.onmousedown = function(e) {
+            obj.style.zIndex = 99;
+            var e = e || window.event;
+            // 计算鼠标在要拖动元素中的位置
+            var x = e.clientX - obj.getBoundingClientRect().left;
+            var y = e.clientY - obj.getBoundingClientRect().top;
+            console.log('x' + x);
+            console.log('y' + y);
+            document.onmousemove = function(e) {
+                var e = e || window.event;
+
+                var xMove = e.clientX - x - oldLeft;
+                var yMove = e.clientY - y - oldTop;
+
+                if (xMove <= 0) xMove = 0;
+                if (yMove <= 0) yMove = 0;
+                if (xMove >= fbox.offsetWidth - obj.offsetWidth) xMove = fbox.offsetWidth - obj.offsetWidth;
+                if (yMove >= fbox.offsetHeight - obj.offsetHeight) yMove = fbox.offsetHeight - obj.offsetHeight;
+                // 移动
+                console.log('x' + xMove);
+                console.log('y' + yMove);
+                obj.style.left = xMove + 'px';
+                obj.style.top = yMove + 'px';
+
+            }
+            document.onmouseup = function() {
+                if (obj.releaseCapture) obj.releaseCapture();
+                document.onmousemove = null;
+                document.onmouseup = null;
+                obj.style.zIndex = 1;
+            }
+            obj.onmouseout = function() {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+            if (obj.setCapture) {
+                obj.setCapture;
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>photoDemo</title>
+    <style>
+        /* 不要这样做 */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            -moz-user-select: nono;
+            user-select: nono;
+            -webkit-user-select: none;
+        }
+        
+        .wrap {
+            width: 980px;
+            height: 590px;
+            margin: 100px auto;
+            position: relative;
+            border: 1px solid;
+        }
+        
+        .wrap div {
+            box-sizing: border-box;
+            width: 300px;
+            height: 170px;
+            padding: 10px 20px;
+            position: absolute;
+        }
+        
+        .wrap div:nth-child(1) {
+            top: 20px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/00.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(2) {
+            top: 20px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/05.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(3) {
+            top: 20px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/08.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(4) {
+            top: 210px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/13.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(5) {
+            top: 210px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/17.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(6) {
+            top: 210px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/22.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(7) {
+            top: 400px;
+            left: 20px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/29.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(8) {
+            top: 400px;
+            left: 340px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM01.jpg) no-repeat;
+            background-size: cover;
+        }
+        
+        .wrap div:nth-child(9) {
+            top: 400px;
+            left: 660px;
+            background: url(http://olaxx04q4.bkt.clouddn.com/1920%2A1080/LM03.jpg) no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+<script src="js/tween.js"></script>
+<script>
+    var fBox = document.getElementsByClassName('wrap')[0];
+    var moveObjs = fBox.getElementsByTagName('div');
+    var oldLeft = fBox.offsetLeft;
+    var oldTop = fBox.offsetTop;
+    for (var index = 0; index < moveObjs.length; index++) {
+        var element = moveObjs[index]; // 也可以使用  moveObjs.item(index)
+        element._position = {
+            top: element.offsetTop,
+            left: element.offsetLeft
+        }; // 保存每个元素的原始坐标
+        dragObject(element, fBox);
+    }
+
+    function getStyle(obj, attr) {
+        return (obj.currentStyle || getComputedStyle(obj, false))[attr];
+    }
+
+    function dragObject(obj, fbox) {
+        obj.onmousedown = function(e) {
+            obj.style.zIndex = 99;
+            var e = e || window.event;
+            // 计算鼠标在要拖动元素中的位置
+            var x = e.clientX - obj.getBoundingClientRect().left;
+            var y = e.clientY - obj.getBoundingClientRect().top;
+            document.onmousemove = function(e) {
+                var e = e || window.event;
+                var xMove = e.clientX - x - oldLeft;
+                var yMove = e.clientY - y - oldTop;
+
+                if (xMove <= 0) xMove = 0;
+                if (yMove <= 0) yMove = 0;
+                if (xMove >= fbox.offsetWidth - obj.offsetWidth) xMove = fbox.offsetWidth - obj.offsetWidth;
+                if (yMove >= fbox.offsetHeight - obj.offsetHeight) yMove = fbox.offsetHeight - obj.offsetHeight;
+                // 移动
+                obj.style.left = xMove + 'px';
+                obj.style.top = yMove + 'px';
+
+            }
+            document.onmouseup = function() {
+                    if (obj.releaseCapture) obj.releaseCapture();
+                    var min = 9999;
+                    var nowIndex = -1;
+                    for (var index = 0; index < moveObjs.length; index++) {
+                        var element = moveObjs[index];
+                        if (element == obj) {
+                            continue;
+                        }
+                        var flag = collisionDetection(obj, element);
+                        if (flag) {
+                            var distance = getDistance(obj, element);
+                            if (min > distance) {
+                                min = distance;
+                                nowIndex = index;
+                            }
+                        } else {
+                            // moveFn(obj, obj._position.left, 'left');
+                            // moveFn(obj, obj._position.top, 'top');
+                            moveFn(obj, {
+                                "left": obj._position.left,
+                                "top": obj._position.top
+                            });
+                        }
+                    }
+                    if (nowIndex > -1) {
+                        var tempT1 = moveObjs[nowIndex]._position.top;
+                        var tempL1 = moveObjs[nowIndex]._position.left;
+                        var tempT2 = obj._position.top;
+                        var tempL2 = obj._position.left;
+                        // moveFn(obj, tempL1, 'left');
+                        // moveFn(moveObjs[nowIndex], tempL2, 'left');
+                        // moveFn(obj, tempT1, 'top');
+                        // moveFn(moveObjs[nowIndex], tempT2, 'top');
+                        moveFn(obj, {
+                            "left": tempL1,
+                            "top": tempT1
+                        });
+                        moveFn(moveObjs[nowIndex], {
+                            "left": tempL2,
+                            "top": tempT2
+                        });
+                        // 交换初始位置
+                        obj._position.top = tempT1;
+                        obj._position.left = tempL1;
+                        moveObjs[nowIndex]._position.top = tempT2;
+                        moveObjs[nowIndex]._position.left = tempL2;
+                    }
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                    obj.style.zIndex = 1;
+                }
+                // obj.onmouseout = function() {
+                //     document.onmousemove = null;
+                //     document.onmouseup = null;
+                // }
+            if (obj.setCapture) {
+                obj.setCapture;
+            }
+        }
+    }
+
+    function collisionDetection(ele1, ele2) { // 碰撞检测
+        // 分别拿到四个边的位置
+        ele1._top = ele1.offsetTop;
+        ele1._left = ele1.offsetLeft;
+        ele1._right = ele1._left + ele1.offsetWidth;
+        ele1._bottom = ele1._top + ele1.offsetHeight;
+        // ele2
+        ele2._top = ele2.offsetTop;
+        ele2._left = ele2.offsetLeft;
+        ele2._right = ele2._left + ele2.offsetWidth;
+        ele2._bottom = ele2._top + ele2.offsetHeight;
+        // console.log('eg1' + ele1._right < ele2._left);
+        // console.log('eg2' + ele1._bottom < ele2._top);
+        // console.log('eg3' + ele1._left > ele2._right);
+        // console.log('eg4' + ele1._top > ele2._bottom);
+        // console.log(ele1._right)
+        // console.log(ele2._left)
+        if (ele1._right < ele2._left || ele1._bottom < ele2._top || ele1._left > ele2._right || ele1._top > ele2._bottom) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 获取两个元素之间的距离
+    function getDistance(ele1, ele2) {
+        var h = ele1.offsetTop - ele2.offsetTop;
+        var w = ele1.offsetLeft - ele2.offsetLeft;
+        return Math.sqrt(h * h + w * w);
+    }
+
+    // tween.js 运动
+    /*
+    var t = 0,
+    b = parseInt(getStyle(obj, attr)),
+    c = json[attr] - b,
+    d = 30;
+    */
+    function moveFn(obj, json, fn) {
+        for (var attr in json) {
+            tweenjs(obj, attr, json[attr]);
+        }
+    }
+
+    function tweenjs(obj, attr, target) {
+        clearInterval(obj[attr]);
+        var t = 0,
+            b = parseInt(getStyle(obj, attr)),
+            c = target - b,
+            d = 30;
+        obj[attr] = setInterval(function() {
+            t++;
+            if (t == d) clearInterval(obj[attr]);
+            obj.style[attr] = Tween['Bounce'].easeOut(t, b, c, d) + 'px';
+        }, 10)
+    }
+</script>
+
+</html>

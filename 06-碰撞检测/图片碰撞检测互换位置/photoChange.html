@@ -152,61 +152,57 @@
 
             }
             document.onmouseup = function() {
-                    if (obj.releaseCapture) obj.releaseCapture();
-                    var min = 9999;
-                    var nowIndex = -1;
-                    for (var index = 0; index < moveObjs.length; index++) {
-                        var element = moveObjs[index];
-                        if (element == obj) {
-                            continue;
-                        }
-                        var flag = collisionDetection(obj, element);
-                        if (flag) {
-                            var distance = getDistance(obj, element);
-                            if (min > distance) {
-                                min = distance;
-                                nowIndex = index;
-                            }
-                        } else {
-                            // moveFn(obj, obj._position.left, 'left');
-                            // moveFn(obj, obj._position.top, 'top');
-                            moveFn(obj, {
-                                "left": obj._position.left,
-                                "top": obj._position.top
-                            });
-                        }
+                if (obj.releaseCapture) obj.releaseCapture();
+                var min = 9999;
+                var nowIndex = -1;
+                for (var index = 0; index < moveObjs.length; index++) {
+                    var element = moveObjs[index];
+                    if (element == obj) {
+                        continue;
                     }
-                    if (nowIndex > -1) {
-                        var tempT1 = moveObjs[nowIndex]._position.top;
-                        var tempL1 = moveObjs[nowIndex]._position.left;
-                        var tempT2 = obj._position.top;
-                        var tempL2 = obj._position.left;
-                        // moveFn(obj, tempL1, 'left');
-                        // moveFn(moveObjs[nowIndex], tempL2, 'left');
-                        // moveFn(obj, tempT1, 'top');
-                        // moveFn(moveObjs[nowIndex], tempT2, 'top');
+                    var flag = collisionDetection(obj, element);
+                    if (flag) {
+                        var distance = getDistance(obj, element);
+                        if (min > distance) {
+                            min = distance;
+                            nowIndex = index;
+                        }
+                    } else {
+                        // moveFn(obj, obj._position.left, 'left');
+                        // moveFn(obj, obj._position.top, 'top');
                         moveFn(obj, {
-                            "left": tempL1,
-                            "top": tempT1
+                            "left": obj._position.left,
+                            "top": obj._position.top
                         });
-                        moveFn(moveObjs[nowIndex], {
-                            "left": tempL2,
-                            "top": tempT2
-                        });
-                        // 交换初始位置
-                        obj._position.top = tempT1;
-                        obj._position.left = tempL1;
-                        moveObjs[nowIndex]._position.top = tempT2;
-                        moveObjs[nowIndex]._position.left = tempL2;
                     }
-                    document.onmousemove = null;
-                    document.onmouseup = null;
-                    obj.style.zIndex = 1;
                 }
-                // obj.onmouseout = function() {
-                //     document.onmousemove = null;
-                //     document.onmouseup = null;
-                // }
+                if (nowIndex > -1) {
+                    var tempT1 = moveObjs[nowIndex]._position.top;
+                    var tempL1 = moveObjs[nowIndex]._position.left;
+                    var tempT2 = obj._position.top;
+                    var tempL2 = obj._position.left;
+                    // moveFn(obj, tempL1, 'left');
+                    // moveFn(moveObjs[nowIndex], tempL2, 'left');
+                    // moveFn(obj, tempT1, 'top');
+                    // moveFn(moveObjs[nowIndex], tempT2, 'top');
+                    moveFn(obj, {
+                        "left": tempL1,
+                        "top": tempT1
+                    });
+                    moveFn(moveObjs[nowIndex], {
+                        "left": tempL2,
+                        "top": tempT2
+                    });
+                    // 交换初始位置
+                    obj._position.top = tempT1;
+                    obj._position.left = tempL1;
+                    moveObjs[nowIndex]._position.top = tempT2;
+                    moveObjs[nowIndex]._position.left = tempL2;
+                }
+                document.onmousemove = null;
+                document.onmouseup = null;
+                obj.style.zIndex = 1;
+            }
             if (obj.setCapture) {
                 obj.setCapture;
             }

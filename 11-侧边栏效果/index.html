@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>侧边展开栏效果</title>
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/sideBar.css">
+    <style>
+        #sidebar {
+            padding-top: 100px;
+            width: 35px;
+            position: absolute;
+            left: 0;
+            background-color: #e1e1e1;
+            min-height: 100%;
+            z-index: 100;
+        }
+        
+        .item {
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        
+        .item div {
+            font-size: 12px;
+        }
+        
+        #closeBar {
+            text-align: center;
+            position: absolute;
+            bottom: 30px;
+            width: 35px;
+            cursor: pointer;
+        }
+        
+        .nav-content {
+            position: absolute;
+            min-height: 100%;
+            width: 170px;
+            background-color: #e1e1e1;
+            opacity: 0;
+            z-index: 99;
+            text-align: center;
+        }
+        
+        .nav-content .nav-con-close {
+            float: right;
+            cursor: pointer;
+            padding-top: 5px;
+            padding-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div id="wrap">
+            <div id="prof" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-user"></i>
+                        </span>
+                <div>
+                    我
+                </div>
+            </div>
+            <div id="asset" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-usd"></i>
+                        </span>
+                <div>
+                    资产
+                </div>
+            </div>
+            <div id="brand" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-heart"></i>
+                        </span>
+                <div>
+                    品牌
+                </div>
+            </div>
+            <div id="broadcast" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-bell"></i>
+                        </span>
+                <div>
+                    直播
+                </div>
+            </div>
+            <div id="foot" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                        </span>
+                <div>
+                    看过
+                </div>
+            </div>
+            <div id="calendar" class="item">
+                <span>
+                            <i class="glyphicon glyphicon-time"></i>
+                        </span>
+                <div>
+                    日历
+                </div>
+            </div>
+        </div>
+        <div id="closeBar">
+            <div>
+                <i class="glyphicon glyphicon-remove"></i>
+            </div>
+        </div>
+    </div>
+    <div id="prof-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            我
+        </div>
+    </div>
+    <div id="asset-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            资产
+        </div>
+    </div>
+    <div id="brand-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            品牌
+        </div>
+    </div>
+    <div id="broadcast-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            品牌
+        </div>
+    </div>
+    <div id="foot-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            看过
+        </div>
+    </div>
+    <div id="calendar-content" class="nav-content">
+        <div class="nav-con-close">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+        </div>
+        <div>
+            日历
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+</html>

@@ -1,0 +1,272 @@
+#sidebar {
+    padding-top: 100px;
+    width: 35px;
+    position: absolute;
+    left: 0;
+    background-color: #e1e1e1;
+    min-height: 100%;
+    z-index: 100;
+}
+
+.item {
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.item div {
+    font-size: 12px;
+}
+
+#closeBar {
+    text-align: center;
+    position: absolute;
+    bottom: 30px;
+    width: 35px;
+    cursor: pointer;
+}
+
+.nav-content {
+    position: absolute;
+    min-height: 100%;
+    width: 170px;
+    background-color: #e1e1e1;
+    opacity: 0;
+    z-index: 99;
+    text-align: center;
+}
+
+.nav-content .nav-con-close {
+    float: right;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+
+/* 下方的关闭按钮动画效果 */
+
+@-webkit-keyframes closeBar_move_right {
+    from {}
+    to {
+        -webkit-transform: translateX(160px) rotate(405deg) scale(1.5);
+        transform: translateX(160px) rotate(405deg) scale(1.5);
+    }
+}
+
+@keyframes closeBar_move_right {
+    from {}
+    to {
+        -webkit-transform: translateX(160px) rotate(405deg) scale(1.5);
+        transform: translateX(160px) rotate(405deg) scale(1.5);
+    }
+}
+
+@-webkit-keyframes closeBar_move_left {
+    from {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+    to {
+        -webkit-transform: translateX(-160px) rotate(-45deg) scale(1);
+        transform: translateX(-160px) rotate(-45deg) scale(1);
+    }
+}
+
+@keyframes closeBar_move_left {
+    from {}
+    to {
+        -webkit-transform: translateX(-160px) rotate(-45deg) scale(1);
+        transform: translateX(-160px) rotate(-45deg) scale(1);
+    }
+}
+
+@-webkit-keyframes move_left {
+    from {}
+    to {
+        -webkit-transform: translateX(-120px);
+        transform: translateX(-120px);
+    }
+}
+
+@keyframes move_left {
+    from {}
+    to {
+        -webkit-transform: translateX(-120px);
+        transform: translateX(-120px);
+    }
+}
+
+@-webkit-keyframes move_right {
+    from {}
+    to {
+        -webkit-transform: translateX(120px);
+        transform: translateX(120px);
+    }
+}
+
+@keyframes move_right {
+    from {}
+    to {
+        -webkit-transform: translateX(120px);
+        transform: translateX(120px);
+    }
+}
+
+.move_right {
+    -webkit-animation: move_right 1s linear;
+    animation: move_right 1s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.move_left {
+    -webkit-animation: move_left 1s linear;
+    animation: move_left 1s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards
+}
+
+.closeBar_move_right {
+    -webkit-animation: closeBar_move_right 1s linear;
+    animation: closeBar_move_right 1s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.closeBar_move_left {
+    -webkit-animation: closeBar_move_left 1s linear;
+    animation: closeBar_move_left 1s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes nc_move_left {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translateX(-120px);
+        transform: translateX(-120px);
+    }
+}
+
+@keyframes nc_move_left {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        -webkit-transform: translateX(-120px);
+        transform: translateX(-120px);
+    }
+}
+
+@-webkit-keyframes nc_move_right {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateX(120px);
+        transform: translateX(120px);
+    }
+}
+
+@keyframes nc_move_right {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateX(120px);
+        transform: translateX(120px);
+    }
+}
+
+.nc_move_right {
+    -webkit-animation: nc_move_right .5s linear;
+    animation: nc_move_right .5s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.nc_move_left {
+    -webkit-animation: nc_move_left .5s linear;
+    animation: nc_move_left .5s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+
+/* 移上移下 */
+
+@-webkit-keyframes move_up {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(-250px);
+        transform: translateY(-250px);
+    }
+}
+
+@keyframes move_up {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(-250px);
+        transform: translateY(-250px);
+    }
+}
+
+.move_up {
+    -webkit-animation: move_up 1s linear;
+    animation: move_up 1s linear;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.fadeIn {
+    -webkit-transform: translateX(120px);
+    transform: translateX(120px);
+    opacity: 1;
+}
+
+.fadeInUp {
+    -webkit-transform: translateY(-250px);
+    transform: translateY(-250px);
+    opacity: 1;
+    -webkit-transition: opacity .2s ease-out, -webkit-transform .2s ease-out;
+    transition: opacity .2s ease-out, -webkit-transform .2s ease-out;
+    transition: transform .2s ease-out, opacity .2s ease-out;
+    transition: transform .2s ease-out, opacity .2s ease-out, -webkit-transform .2s ease-out;
+}
+
+.fadeOutLfet {
+    -webkit-transform: translateX(-120px);
+    transform: translateX(-120px);
+    opacity: 0;
+    -webkit-transition: opacity .2s ease-out, -webkit-transform .2s ease-out;
+    transition: opacity .2s ease-out, -webkit-transform .2s ease-out;
+    transition: transform .2s ease-out, opacity .2s ease-out;
+    transition: transform .2s ease-out, opacity .2s ease-out, -webkit-transform .2s ease-out;
+}

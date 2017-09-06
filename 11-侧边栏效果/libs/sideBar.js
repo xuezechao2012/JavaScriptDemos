@@ -77,7 +77,7 @@
         });
     }
 
-    SideBar.prototype.triggerSwitch = function() {
+    SideBar.prototype.triggerSwitch = function() { // 增加切换关闭打开按钮的方法
         if (this.state === 'opened') {
             this.close();
         } else if (this.state === 'closed') {
@@ -85,7 +85,7 @@
         }
     }
 
-    SideBar.prototype.close = function() {
+    SideBar.prototype.close = function() { // 关闭
         navigateBar.close();
         this.el.style.left = '0px';
         this.el.className = 'move_left';
@@ -94,7 +94,7 @@
         this.state = 'closed';
     }
 
-    SideBar.prototype.open = function() {
+    SideBar.prototype.open = function() { // 打开
         this.el.style.left = '-120px';
         this.el.className = 'move_right';
         this.closeBarEl.style.left = '160px';

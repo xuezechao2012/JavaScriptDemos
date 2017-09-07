@@ -232,8 +232,28 @@ $.hasClass = function(currentEle, cls) {
  */
 $.getElementsByClass = function(parentEle, cls) {
     if (parentEle.getElementsByClass) {
-        parentEle.getElementsByClass(cls);
+        return parentEle.getElementsByClass(cls);
     } else {
+        var arr = [];
+        var reg = new RegExp('\\b' + cls + '\\b');
+        var allEles = parentEle.getElementsByTagName('*');
+        for (var index = 0; index < allEles.length; index++) {
+            var element = allEles[index];
+            if (reg.test(element.className)) {
+                arr.push(element);
+            }
+        }
+        return arr;
+    }
+}
 
+/**
+ * getCSS 获取CSS属性的值
+ */
+$.getCss = function(ele, attr) {
+    if (ele && ele.nodeType && ele.nodeType === 1 && attr && typeof attr === 'string') {
+        return ele.currentStyle[attr] || getComputedStyle(ele, false)[attr];
+    } else {
+        throw new Error('参数错误！');
     }
 }
